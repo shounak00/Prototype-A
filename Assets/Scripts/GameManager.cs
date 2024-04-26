@@ -7,8 +7,18 @@ public class GameManager : MonoBehaviour
     private int matches = 0;
     private int turns = 0;
     private int totalMatches = 8;
-    private bool gameStarted = false;
-
+    public bool gameStarted = false;
+    
+    public static GameManager Instance { get; private set; }
+    
+    private void Awake()
+    {
+        if (Instance == null)
+            Instance = this;
+        else
+            Destroy(gameObject);
+    }
+    
     public void StartGame()
     {
         gameStarted = true;
