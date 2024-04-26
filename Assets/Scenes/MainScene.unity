@@ -2804,9 +2804,9 @@ MonoBehaviour:
           m_StringArgument: 
           m_BoolArgument: 0
         m_CallState: 2
-      - m_Target: {fileID: 153317540}
-        m_TargetAssemblyTypeName: SaveManager, Assembly-CSharp
-        m_MethodName: SaveGame
+      - m_Target: {fileID: 635182095}
+        m_TargetAssemblyTypeName: CardManager, Assembly-CSharp
+        m_MethodName: ResetCardLists
         m_Mode: 1
         m_Arguments:
           m_ObjectArgument: {fileID: 0}

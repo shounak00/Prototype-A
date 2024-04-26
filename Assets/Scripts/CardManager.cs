@@ -21,6 +21,10 @@ public class CardManager : MonoBehaviour
 
     public void ResetCardLists()
     {
+        foreach (GameObject card in cards)
+        {
+            Destroy(card);
+        }
         cards.Clear();
     }
 

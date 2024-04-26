@@ -47,6 +47,7 @@ public class GameManager : MonoBehaviour
         {
             turns = 0;
             matches = 0;
+            score = 0;
         }
         
         
