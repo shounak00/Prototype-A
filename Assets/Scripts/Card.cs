@@ -23,7 +23,7 @@ public class Card : MonoBehaviour
     
     IEnumerator WaitandFlip()
     {
-        yield return new WaitForSeconds(1.25f);
+        yield return new WaitForSeconds(1f);
         FlipBack();
     }
 

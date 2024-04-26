@@ -59,7 +59,10 @@ public class CardManager : MonoBehaviour
 
     public void FlipCard(Card card)
     {
-        card.Flip();
+        if (flippedCards.Count < 2)
+        {
+            card.Flip();
+        }
         
         if (card.isFlipped)
         {

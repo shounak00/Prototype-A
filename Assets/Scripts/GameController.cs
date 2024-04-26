@@ -35,6 +35,7 @@ public class GameController : MonoBehaviour
                 if (selectedCard != null && GameManager.Instance.gameStarted)
                 {
                     cardManager.FlipCard(selectedCard);
+                    SoundManager.Instance.PlaySound(SoundManager.Instance.cardFlipSound);
                 }
                 
                 else

@@ -30,7 +30,11 @@ public class GameManager : MonoBehaviour
     {
         gameStarted = true;
         cardManager.SetupCards();
-        
+        turns = 0;
+        matches = 0;
+        uiManager.UpdateTurnsText();
+        uiManager.UpdateMatchesText();
+        uiManager.gameEndPopUp.SetActive(false);
         Debug.Log("Game started!");
     }
 
@@ -38,6 +42,9 @@ public class GameManager : MonoBehaviour
     {
         gameStarted = false;
         cardManager.ResetCardLists();
+        
+        uiManager.gameEndPopUp.SetActive(true);
+        SoundManager.Instance.PlayGameEndClip();
         Debug.Log("Game ended!");
     }
 
@@ -64,6 +71,8 @@ public class GameManager : MonoBehaviour
             uiManager.UpdateMatchesText();
             
             //Todo: add vfx and sfx here
+            SoundManager.Instance.PlaySound(SoundManager.Instance.matchingSound);
+            
             Destroy(card1.gameObject);
             Destroy(card2.gameObject);
             cardManager.flippedCards.Clear();
@@ -75,6 +84,8 @@ public class GameManager : MonoBehaviour
             card2.FlipBack();
             
             //Todo: add vfx and sfx here
+            SoundManager.Instance.PlaySound(SoundManager.Instance.mismatchingSound);
+            
             cardManager.flippedCards.Clear();
             Debug.Log("No match!");
         }

@@ -7,6 +7,7 @@ public class UIManager : MonoBehaviour
 {
     [SerializeField] private TextMeshProUGUI turnsText;
     [SerializeField] private TextMeshProUGUI matchesText;
+    public GameObject gameEndPopUp;
 
     public void UpdateTurnsText()
     {
