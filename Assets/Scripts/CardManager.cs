@@ -17,14 +17,11 @@ public class CardManager : MonoBehaviour
         //Todo: first finish up card spawning then do shuffle
         SpawnCards();
         ShuffleCards();
-        
-
     }
 
-    IEnumerator waitToShow()
+    public void ResetCardLists()
     {
-        yield return new WaitForSeconds(2.0f);
-        
+        cards.Clear();
     }
 
     void SpawnCards()

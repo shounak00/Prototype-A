@@ -1,6 +1,8 @@
+using System;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using DG.Tweening;
 
 public class Card : MonoBehaviour
 {
@@ -8,12 +10,37 @@ public class Card : MonoBehaviour
     public bool isFlipped = false;
     public bool isMatched = false;
     public string cardName;
+    public GameObject backSide;
+    
+    private Quaternion startRotation;
+    private Quaternion targetRotation;
+    private float flipSpeed = 0.5f; 
+
+    private void Start()
+    {
+        startRotation = transform.rotation;
+        StartCoroutine(WaitandFlip());
+    }
+    
+    IEnumerator WaitandFlip()
+    {
+        yield return new WaitForSeconds(1.25f);
+        FlipBack();
+    }
 
     public void Flip()
     {
         if (!isMatched)
         {
-            isFlipped = !isFlipped;
+            targetRotation = Quaternion.Euler(0, 90, 0);
+            transform.DORotate(targetRotation.eulerAngles, flipSpeed).SetEase(Ease.OutQuad).OnComplete(() =>
+            {
+                backSide.SetActive(false);
+                
+                targetRotation = Quaternion.Euler(0, 0, 0);
+                transform.DORotate(targetRotation.eulerAngles, flipSpeed).SetEase(Ease.OutQuad);
+            });
+            
             Debug.Log("Card flipped!");
         }
     }
@@ -21,6 +48,15 @@ public class Card : MonoBehaviour
     public void FlipBack()
     {
         isFlipped = false;
+        
+        targetRotation = Quaternion.Euler(0, 90, 0);
+        transform.DORotate(targetRotation.eulerAngles, flipSpeed).SetEase(Ease.OutQuad);
+                
+        backSide.SetActive(true);
+                
+        targetRotation = Quaternion.Euler(0, 180, 0);
+        transform.DORotate(targetRotation.eulerAngles, flipSpeed).SetEase(Ease.OutQuad);
+        
         Debug.Log("Card unflipped!");
     }
 }
