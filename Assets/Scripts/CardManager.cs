@@ -13,6 +13,7 @@ public class CardManager : MonoBehaviour
     public GameObject gameBoard;
     
     public List<GameObject> cards = new List<GameObject>();
+    
     public void SetupCards()
     {
         SpawnCards();
@@ -45,6 +46,7 @@ public class CardManager : MonoBehaviour
                 cardImage.sprite = images[imageIndex];
                 newCard.GetComponent<Card>().image = cardImage.sprite;
                 newCard.GetComponent<Card>().name = images[imageIndex].name;
+                newCard.GetComponent<Card>().cardName = images[imageIndex].name;
             }
         }
 
@@ -100,7 +102,12 @@ public class CardManager : MonoBehaviour
             cards[i].transform.SetParent(cardParents[i]);
             cards[i].transform.localPosition = Vector3.zero;
             cards[i].transform.localScale = Vector3.one;
+            cards[i].GetComponent<Card>().cardSlot = cards[i].transform.parent.name;
+            //PlayerPrefs.SetString("CardData_" + i , cards[i].GetComponent<Card>().cardSlot+ "|"+ cards[i].GetComponent<Card>().cardName);
+            //Debug.Log(PlayerPrefs.GetString("CardData_" + i , cards[i].GetComponent<Card>().cardSlot+ cards[i].GetComponent<Card>().cardName));
         }
     }
+    
+    
 }
 

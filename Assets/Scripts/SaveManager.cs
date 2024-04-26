@@ -15,6 +15,15 @@ public class SaveManager : MonoBehaviour
         PlayerPrefs.SetInt("Turns", _turns);
         Debug.Log("Game saved!");
         CardManager tempCardManager = GameManager.Instance.cardManager;
+        
+        for (int i = 0; i < tempCardManager.cards.Count; i++)
+        {
+            if (tempCardManager.cards[i] != null)
+            {
+                PlayerPrefs.SetString("CardData_" + i , tempCardManager.cards[i].GetComponent<Card>().cardSlot+ "|"+ tempCardManager.cards[i].GetComponent<Card>().cardName);
+                Debug.Log(PlayerPrefs.GetString("CardData_" + i , tempCardManager.cards[i].GetComponent<Card>().cardSlot+ tempCardManager.cards[i].GetComponent<Card>().cardName));
+            }
+        }
     }
 
     public void LoadGame()

@@ -13,8 +13,6 @@ public class GameManager : MonoBehaviour
     
     [HideInInspector] public CardManager cardManager;
     UIManager uiManager;
-    
-    [SerializeField] private ScoreManager scoreManager;
     [SerializeField] private SaveManager saveManager;
     
     public static GameManager Instance { get; private set; }
@@ -28,7 +26,6 @@ public class GameManager : MonoBehaviour
         
         cardManager = FindObjectOfType<CardManager>();
         uiManager = FindObjectOfType<UIManager>();
-        scoreManager = FindObjectOfType<ScoreManager>();
         saveManager = FindObjectOfType<SaveManager>();
     }
     

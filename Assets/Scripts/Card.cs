@@ -11,7 +11,10 @@ public class Card : MonoBehaviour
     
     public GameObject backSide;
     private Quaternion targetRotation;
-    private float flipSpeed = 0.1f; 
+    private float flipSpeed = 0.1f;
+
+    public string cardName;
+    public string cardSlot;
 
     private void Start()
     {
