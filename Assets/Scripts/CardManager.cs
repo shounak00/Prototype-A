@@ -41,8 +41,6 @@ public class CardManager : MonoBehaviour
                 cardImage.sprite = images[imageIndex];
                 newCard.GetComponent<Card>().image = cardImage.sprite;
                 newCard.GetComponent<Card>().name = images[imageIndex].name;
-                newCard.GetComponent<Card>().cardName = images[imageIndex].name;
-                
             }
         }
 

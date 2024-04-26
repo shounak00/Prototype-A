@@ -4,11 +4,17 @@ using UnityEngine;
 
 public class SaveManager : MonoBehaviour
 {
-    public void SaveGame(int matches, int turns)
+    int _matches,_turns;
+    public bool isSaved;
+    public void SaveGame()
     {
-        PlayerPrefs.SetInt("Matches", matches);
-        PlayerPrefs.SetInt("Turns", turns);
+        PlayerPrefs.SetInt("Saved",1);
+        _matches = GameManager.Instance.matches;
+        _turns = GameManager.Instance.turns;
+        PlayerPrefs.SetInt("Matches", _matches);
+        PlayerPrefs.SetInt("Turns", _turns);
         Debug.Log("Game saved!");
+        CardManager tempCardManager = GameManager.Instance.cardManager;
     }
 
     public void LoadGame()

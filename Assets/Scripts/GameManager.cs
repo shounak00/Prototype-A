@@ -8,10 +8,14 @@ public class GameManager : MonoBehaviour
     public int matches = 0;
     public int turns = 0;
     public int totalMatches = 8;
+    public int score = 0;
     public bool gameStarted = false;
     
     [HideInInspector] public CardManager cardManager;
     UIManager uiManager;
+    
+    [SerializeField] private ScoreManager scoreManager;
+    [SerializeField] private SaveManager saveManager;
     
     public static GameManager Instance { get; private set; }
     
@@ -24,17 +28,30 @@ public class GameManager : MonoBehaviour
         
         cardManager = FindObjectOfType<CardManager>();
         uiManager = FindObjectOfType<UIManager>();
+        scoreManager = FindObjectOfType<ScoreManager>();
+        saveManager = FindObjectOfType<SaveManager>();
     }
     
     public void StartGame()
     {
         gameStarted = true;
         cardManager.SetupCards();
-        turns = 0;
-        matches = 0;
-        uiManager.UpdateTurnsText();
-        uiManager.UpdateMatchesText();
-        uiManager.gameEndPopUp.SetActive(false);
+
+        if (PlayerPrefs.GetInt("Saved") == 1)
+        {
+            cardManager.ResetCardLists();
+            saveManager.LoadGame();
+        }
+
+        else
+        {
+            turns = 0;
+            matches = 0;
+        }
+        
+        
+        uiManager.startPopOff();
+        
         Debug.Log("Game started!");
     }
 
@@ -43,7 +60,7 @@ public class GameManager : MonoBehaviour
         gameStarted = false;
         cardManager.ResetCardLists();
         
-        uiManager.gameEndPopUp.SetActive(true);
+        uiManager.FinalPopUp();
         SoundManager.Instance.PlayGameEndClip();
         Debug.Log("Game ended!");
     }
@@ -67,8 +84,7 @@ public class GameManager : MonoBehaviour
         if (card1.image == card2.image)
         {
             matches++;
-            
-            uiManager.UpdateMatchesText();
+            score += 10;
             
             //Todo: add vfx and sfx here
             SoundManager.Instance.PlaySound(SoundManager.Instance.matchingSound);
@@ -83,6 +99,8 @@ public class GameManager : MonoBehaviour
             card1.FlipBack();
             card2.FlipBack();
             
+            score--;
+            
             //Todo: add vfx and sfx here
             SoundManager.Instance.PlaySound(SoundManager.Instance.mismatchingSound);
             
@@ -91,7 +109,9 @@ public class GameManager : MonoBehaviour
         }
 
         turns++;
-        uiManager.UpdateTurnsText();
+        
+        //Update Score here
+        uiManager.UpdateText();
 
         if (matches == totalMatches)
         {

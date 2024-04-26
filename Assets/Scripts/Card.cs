@@ -8,16 +8,13 @@ public class Card : MonoBehaviour
 {
     public Sprite image;
     public bool isFlipped = false;
-    public string cardName;
-    public GameObject backSide;
     
-    private Quaternion startRotation;
+    public GameObject backSide;
     private Quaternion targetRotation;
     private float flipSpeed = 0.1f; 
 
     private void Start()
     {
-        startRotation = transform.rotation;
         StartCoroutine(WaitandFlip());
     }
     
@@ -42,10 +39,7 @@ public class Card : MonoBehaviour
             GameManager.Instance.CountFlippedCards();
         });
 
-        Debug.Log("Card flipped!");
-        
-        
-        
+        //Debug.Log("Card flipped!");
     }
 
     public void FlipBack()
@@ -60,13 +54,7 @@ public class Card : MonoBehaviour
         targetRotation = Quaternion.Euler(0, 180, 0);
         transform.DORotate(targetRotation.eulerAngles, flipSpeed).SetEase(Ease.OutQuad);
         
-        Debug.Log("Card unflipped!");
+        //Debug.Log("Card unflipped!");
     }
-    
-    /*void OnMouseDown()
-    {
-        Debug.Log("Clicked on object: " + gameObject.name);
-        // Add your click handling logic here
-    }*/
 }
 

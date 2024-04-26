@@ -6,11 +6,10 @@ using UnityEngine;
 public class GameController : MonoBehaviour
 {
     private CardManager cardManager;
-    private ScoreManager scoreManager;
-    private SaveManager saveManager;
+    
 
     GameObject raycastHitThis;
-    [SerializeField] private Card selectedCard;
+    private Card selectedCard;
 
     void Start()
     {
