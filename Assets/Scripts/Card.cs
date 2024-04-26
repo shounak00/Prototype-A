@@ -30,6 +30,7 @@ public class Card : MonoBehaviour
 
     public void Flip()
     {
+        isFlipped = true;
         if (!isMatched)
         {
             targetRotation = Quaternion.Euler(0, 90, 0);
@@ -59,5 +60,11 @@ public class Card : MonoBehaviour
         
         Debug.Log("Card unflipped!");
     }
+    
+    /*void OnMouseDown()
+    {
+        Debug.Log("Clicked on object: " + gameObject.name);
+        // Add your click handling logic here
+    }*/
 }
 

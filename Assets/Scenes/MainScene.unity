@@ -1699,6 +1699,9 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   cardManager: {fileID: 635182095}
+  cardLayerMask:
+    serializedVersion: 2
+    m_Bits: 4294967295
 --- !u!114 &1100596525
 MonoBehaviour:
   m_ObjectHideFlags: 0

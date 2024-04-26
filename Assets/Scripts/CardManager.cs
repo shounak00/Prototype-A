@@ -7,7 +7,7 @@ public class CardManager : MonoBehaviour
 {
     public GameObject cardPrefab;
     public List<RectTransform> cardPosition = new List<RectTransform>();
-    private List<Card> flippedCards = new List<Card>();
+    public List<Card> flippedCards = new List<Card>();
     public Sprite[] images;
     public GameObject gameBoard;
     

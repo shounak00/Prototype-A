@@ -1,5 +1,6 @@
 using System.Collections;
 using System.Collections.Generic;
+using Unity.VisualScripting;
 using UnityEngine;
 
 public class GameController : MonoBehaviour
@@ -7,6 +8,9 @@ public class GameController : MonoBehaviour
     [SerializeField] private CardManager cardManager;
     private ScoreManager scoreManager;
     private SaveManager saveManager;
+
+    GameObject raycastHitThis;
+    [SerializeField] private Card selectedCard;
 
     void Start()
     {
@@ -25,7 +29,9 @@ public class GameController : MonoBehaviour
 
             if (Physics.Raycast(ray, out hit))
             {
-                Card selectedCard = hit.collider.GetComponent<Card>();
+                raycastHitThis = hit.collider.gameObject;
+                selectedCard = raycastHitThis.GetComponent<Card>();
+                
                 if (selectedCard != null && GameManager.Instance.gameStarted)
                 {
                     cardManager.FlipCard(selectedCard);
@@ -33,7 +39,7 @@ public class GameController : MonoBehaviour
                 
                 else
                 {
-                    Debug.Log("Raycast hit something but no Card component found.");
+                    Debug.Log("Raycast hit something but no Card component found."+ hit.collider.gameObject.name);
                 }
             }
             

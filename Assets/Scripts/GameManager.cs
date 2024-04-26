@@ -9,6 +9,9 @@ public class GameManager : MonoBehaviour
     private int totalMatches = 8;
     public bool gameStarted = false;
     
+    [SerializeField] private CardManager cardManager;
+    
+    
     public static GameManager Instance { get; private set; }
     
     private void Awake()
@@ -17,17 +20,22 @@ public class GameManager : MonoBehaviour
             Instance = this;
         else
             Destroy(gameObject);
+        
+        cardManager = FindObjectOfType<CardManager>();
     }
     
     public void StartGame()
     {
         gameStarted = true;
+        cardManager.SetupCards();
+        
         Debug.Log("Game started!");
     }
 
     public void EndGame()
     {
         gameStarted = false;
+        cardManager.ResetCardLists();
         Debug.Log("Game ended!");
     }
 
