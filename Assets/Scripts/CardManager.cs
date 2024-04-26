@@ -1,6 +1,7 @@
 using System.Collections;
 using UnityEngine;
 using System.Collections.Generic;
+using Unity.VisualScripting;
 using UnityEngine.UI;
 
 public class CardManager : MonoBehaviour
@@ -60,20 +61,17 @@ public class CardManager : MonoBehaviour
     public void FlipCard(Card card)
     {
         card.Flip();
+        
         if (card.isFlipped)
         {
             flippedCards.Add(card);
-            if (flippedCards.Count == 2)
-            {
-                GameManager.Instance.CheckMatch(flippedCards[0], flippedCards[1]);
-                flippedCards.Clear();
-            }
         }
         else
         {
             flippedCards.Remove(card);
         }
     }
+    
 
     private void ShuffleCards()
     {

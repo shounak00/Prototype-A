@@ -4,12 +4,12 @@ using UnityEngine;
 
 public class GameManager : MonoBehaviour
 {
-    private int matches = 0;
-    private int turns = 0;
-    private int totalMatches = 8;
+    public int matches = 0;
+    public int turns = 0;
+    public int totalMatches = 8;
     public bool gameStarted = false;
     
-    [SerializeField] private CardManager cardManager;
+    [SerializeField] public CardManager cardManager;
     
     
     public static GameManager Instance { get; private set; }
@@ -39,19 +39,38 @@ public class GameManager : MonoBehaviour
         Debug.Log("Game ended!");
     }
 
+    public void CountFlippedCards()
+    {
+        if (cardManager.flippedCards.Count == 2)
+        {
+            StartCoroutine(delayToShow());
+        }
+    }
+
+    IEnumerator delayToShow()
+    {
+        yield return new WaitForSeconds(0.5f);
+        CheckMatch(cardManager.flippedCards[0], cardManager.flippedCards[1]);
+    }
+
     public void CheckMatch(Card card1, Card card2)
     {
         if (card1.image == card2.image)
         {
-            card1.isMatched = true;
-            card2.isMatched = true;
             matches++;
+            
+            //Todo: add vfx and sfx here
+            Destroy(card1.gameObject);
+            Destroy(card2.gameObject);
+            cardManager.flippedCards.Clear();
             Debug.Log("Match found!");
         }
-        else
+        if(card1.image != card2.image)
         {
             card1.FlipBack();
             card2.FlipBack();
+            
+            cardManager.flippedCards.Clear();
             Debug.Log("No match!");
         }
 

@@ -8,13 +8,12 @@ public class Card : MonoBehaviour
 {
     public Sprite image;
     public bool isFlipped = false;
-    public bool isMatched = false;
     public string cardName;
     public GameObject backSide;
     
     private Quaternion startRotation;
     private Quaternion targetRotation;
-    private float flipSpeed = 0.5f; 
+    private float flipSpeed = 0.1f; 
 
     private void Start()
     {
@@ -31,19 +30,22 @@ public class Card : MonoBehaviour
     public void Flip()
     {
         isFlipped = true;
-        if (!isMatched)
+
+        targetRotation = Quaternion.Euler(0, 90, 0);
+        transform.DORotate(targetRotation.eulerAngles, flipSpeed).SetEase(Ease.OutQuad).OnComplete(() =>
         {
-            targetRotation = Quaternion.Euler(0, 90, 0);
-            transform.DORotate(targetRotation.eulerAngles, flipSpeed).SetEase(Ease.OutQuad).OnComplete(() =>
-            {
-                backSide.SetActive(false);
-                
-                targetRotation = Quaternion.Euler(0, 0, 0);
-                transform.DORotate(targetRotation.eulerAngles, flipSpeed).SetEase(Ease.OutQuad);
-            });
+            backSide.SetActive(false);
+
+            targetRotation = Quaternion.Euler(0, 0, 0);
+            transform.DORotate(targetRotation.eulerAngles, flipSpeed).SetEase(Ease.OutQuad);
             
-            Debug.Log("Card flipped!");
-        }
+            GameManager.Instance.CountFlippedCards();
+        });
+
+        Debug.Log("Card flipped!");
+        
+        
+        
     }
 
     public void FlipBack()

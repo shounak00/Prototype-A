@@ -1100,6 +1100,7 @@ MonoBehaviour:
   - {fileID: 92286125}
   - {fileID: 2095316422}
   - {fileID: 1270906942}
+  flippedCards: []
   images:
   - {fileID: 21300000, guid: 4947828b06dd52d43b1c20caa1233749, type: 3}
   - {fileID: 21300000, guid: 881c5267696d4b34b9bd341c4ee51a90, type: 3}
@@ -1699,9 +1700,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   cardManager: {fileID: 635182095}
-  cardLayerMask:
-    serializedVersion: 2
-    m_Bits: 4294967295
+  selectedCard: {fileID: 0}
 --- !u!114 &1100596525
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -1715,6 +1714,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   gameStarted: 0
+  cardManager: {fileID: 0}
 --- !u!1 &1101707579
 GameObject:
   m_ObjectHideFlags: 0
@@ -2629,9 +2629,9 @@ MonoBehaviour:
           m_StringArgument: 
           m_BoolArgument: 0
         m_CallState: 2
-      - m_Target: {fileID: 635182095}
-        m_TargetAssemblyTypeName: CardManager, Assembly-CSharp
-        m_MethodName: SetupCards
+      - m_Target: {fileID: 1100596525}
+        m_TargetAssemblyTypeName: GameManager, Assembly-CSharp
+        m_MethodName: StartGame
         m_Mode: 1
         m_Arguments:
           m_ObjectArgument: {fileID: 0}

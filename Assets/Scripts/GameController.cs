@@ -5,7 +5,7 @@ using UnityEngine;
 
 public class GameController : MonoBehaviour
 {
-    [SerializeField] private CardManager cardManager;
+    private CardManager cardManager;
     private ScoreManager scoreManager;
     private SaveManager saveManager;
 
@@ -14,7 +14,7 @@ public class GameController : MonoBehaviour
 
     void Start()
     {
-        cardManager = FindObjectOfType<CardManager>();
+        cardManager = GameManager.Instance.cardManager;
     }
 
     void Update()
