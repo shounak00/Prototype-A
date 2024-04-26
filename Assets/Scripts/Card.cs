@@ -7,6 +7,7 @@ public class Card : MonoBehaviour
     public Sprite image;
     public bool isFlipped = false;
     public bool isMatched = false;
+    public string cardName;
 
     public void Flip()
     {
