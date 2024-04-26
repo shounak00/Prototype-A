@@ -1,6 +1,7 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using TMPro;
 
 public class GameManager : MonoBehaviour
 {
@@ -9,8 +10,8 @@ public class GameManager : MonoBehaviour
     public int totalMatches = 8;
     public bool gameStarted = false;
     
-    [SerializeField] public CardManager cardManager;
-    
+    [HideInInspector] public CardManager cardManager;
+    UIManager uiManager;
     
     public static GameManager Instance { get; private set; }
     
@@ -22,6 +23,7 @@ public class GameManager : MonoBehaviour
             Destroy(gameObject);
         
         cardManager = FindObjectOfType<CardManager>();
+        uiManager = FindObjectOfType<UIManager>();
     }
     
     public void StartGame()
@@ -59,6 +61,8 @@ public class GameManager : MonoBehaviour
         {
             matches++;
             
+            uiManager.UpdateMatchesText();
+            
             //Todo: add vfx and sfx here
             Destroy(card1.gameObject);
             Destroy(card2.gameObject);
@@ -70,11 +74,13 @@ public class GameManager : MonoBehaviour
             card1.FlipBack();
             card2.FlipBack();
             
+            //Todo: add vfx and sfx here
             cardManager.flippedCards.Clear();
             Debug.Log("No match!");
         }
 
         turns++;
+        uiManager.UpdateTurnsText();
 
         if (matches == totalMatches)
         {

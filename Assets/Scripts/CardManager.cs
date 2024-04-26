@@ -15,7 +15,6 @@ public class CardManager : MonoBehaviour
     public List<GameObject> cards = new List<GameObject>();
     public void SetupCards()
     {
-        //Todo: first finish up card spawning then do shuffle
         SpawnCards();
         ShuffleCards();
     }
@@ -75,8 +74,7 @@ public class CardManager : MonoBehaviour
 
     private void ShuffleCards()
     {
-        //ToDo: First finish up card spawning then do shuffle
-        Debug.Log("Shuffle Working");
+        
         List<Transform> cardParents = new List<Transform>();
 
         // Get the parent transforms of all cards
