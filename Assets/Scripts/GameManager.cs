@@ -1,0 +1,48 @@
+using System.Collections;
+using System.Collections.Generic;
+using UnityEngine;
+
+public class GameManager : MonoBehaviour
+{
+    private int matches = 0;
+    private int turns = 0;
+    private int totalMatches = 8;
+    private bool gameStarted = false;
+
+    public void StartGame()
+    {
+        gameStarted = true;
+        Debug.Log("Game started!");
+    }
+
+    public void EndGame()
+    {
+        gameStarted = false;
+        Debug.Log("Game ended!");
+    }
+
+    public void CheckMatch(Card card1, Card card2)
+    {
+        if (card1.image == card2.image)
+        {
+            card1.isMatched = true;
+            card2.isMatched = true;
+            matches++;
+            Debug.Log("Match found!");
+        }
+        else
+        {
+            card1.FlipBack();
+            card2.FlipBack();
+            Debug.Log("No match!");
+        }
+
+        turns++;
+
+        if (matches == totalMatches)
+        {
+            EndGame();
+        }
+    }
+}
+
