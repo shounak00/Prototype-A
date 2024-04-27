@@ -1,23 +1,36 @@
+using System;
 using System.Collections;
 using UnityEngine;
 using System.Collections.Generic;
+using System.Runtime.CompilerServices;
 using Unity.VisualScripting;
 using UnityEngine.UI;
+using Random = UnityEngine.Random;
 
 public class CardManager : MonoBehaviour
 {
     public GameObject cardPrefab;
-    public List<RectTransform> cardPosition = new List<RectTransform>();
+    public RectTransform[] cardPosition;
     public List<Card> flippedCards = new List<Card>();
     public Sprite[] images;
     public GameObject gameBoard;
     
     public List<GameObject> cards = new List<GameObject>();
-    
+
+    public SaveManager svManager;
+
+    [SerializeField] private GameObject[] cardsArray;
+    public int[] indexArray;
+
+    private void Start()
+    {
+        svManager = FindObjectOfType<SaveManager>();
+    }
+
     public void SetupCards()
     {
+        Debug.Log("Setup Cards");
         SpawnCards();
-        ShuffleCards();
     }
 
     public void ResetCardLists()
@@ -28,8 +41,74 @@ public class CardManager : MonoBehaviour
         }
         cards.Clear();
     }
+    void SpawnCardsFromSavedData(string[] cardSlots, string[] cardNames)
+    {
+        for (int i = 0; i < cardSlots.Length; i++)
+        {
+            GameObject newCard = Instantiate(cardPrefab);
+            newCard.transform.localPosition = Vector3.zero;
+            newCard.transform.localScale = Vector3.one;
+            cards.Add(newCard);
+
+            Image cardImage = newCard.GetComponent<Image>();
+            if (cardImage != null)
+            {
+                // Find the index of the card name in the images array
+                int imageIndex = Array.FindIndex(images, img => img.name == cardNames[i]);
+                if (imageIndex != -1)
+                {
+                    cardImage.sprite = images[imageIndex];
+                    newCard.GetComponent<Card>().image = cardImage.sprite;
+                    newCard.GetComponent<Card>().name = cardNames[i];
+                    newCard.GetComponent<Card>().cardName = cardNames[i];
+                }
+                else
+                {
+                    Debug.LogWarning("Card name not found in images array: " + cardNames[i]);
+                }
+            }
+            
+        }
+
+        StartCoroutine(waitTillSpawn());
+    }
+
+    
+    IEnumerator waitTillSpawn()
+    {
+        yield return new WaitForSeconds(0.1f);
+        fixPositions(svManager.cardSlot);
+    }
+
+    void fixPositions(string[] cardSlots)
+    {
+        indexArray = new int[cardSlots.Length];
+        for (int i = 0; i < cardSlots.Length; i++)
+        {
+            int posIndex = Array.FindIndex(cardPosition, img => img.name == cardSlots[i]);
+            cards[i].transform.SetParent(cardPosition[posIndex]);
+            cards[i].transform.localPosition = Vector3.zero;
+            cards[i].transform.localScale = Vector3.one;
+        }
+    }
+
+    
 
     void SpawnCards()
+    {
+        if (svManager.dataLoaded)
+        {
+            SpawnCardsFromSavedData(svManager.cardSlot, svManager.cardName);
+        }
+        else
+        {
+            SpawnForAllGrids();
+            ShuffleCards();
+        }
+        
+    }
+
+    void SpawnForAllGrids()
     {
         for (int i = 0; i < 8; i++)
         {
@@ -37,7 +116,6 @@ public class CardManager : MonoBehaviour
             newCard.transform.localPosition = Vector3.zero;
             newCard.transform.localScale= Vector3.one;
             cards.Add(newCard);
-
             
             Image cardImage = newCard.GetComponent<Image>();
             if (cardImage != null)

@@ -484,7 +484,27 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: d8033e90874d83949b3480fe9bdc07a2, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  isSaved: 0
+  cardSlot: []
+  cardPos:
+  - {fileID: 109556342}
+  - {fileID: 1987331934}
+  - {fileID: 151688749}
+  - {fileID: 901584833}
+  - {fileID: 1824757775}
+  - {fileID: 357386642}
+  - {fileID: 1974019144}
+  - {fileID: 474525156}
+  - {fileID: 1624454291}
+  - {fileID: 649643909}
+  - {fileID: 576289328}
+  - {fileID: 1094171162}
+  - {fileID: 238621324}
+  - {fileID: 92286125}
+  - {fileID: 2095316422}
+  - {fileID: 1270906942}
+  cardName: []
+  loadedData: []
+  dataLoaded: 0
 --- !u!4 &153317541
 Transform:
   m_ObjectHideFlags: 0
@@ -993,9 +1013,9 @@ MonoBehaviour:
   m_OnClick:
     m_PersistentCalls:
       m_Calls:
-      - m_Target: {fileID: 635182097}
-        m_TargetAssemblyTypeName: CardData, Assembly-CSharp
-        m_MethodName: LoadSavedData
+      - m_Target: {fileID: 153317540}
+        m_TargetAssemblyTypeName: SaveManager, Assembly-CSharp
+        m_MethodName: SaveGame
         m_Mode: 1
         m_Arguments:
           m_ObjectArgument: {fileID: 0}
@@ -1512,10 +1532,13 @@ MonoBehaviour:
   - {fileID: 21300000, guid: a142a2bc1a667fe41aad956d78799f17, type: 3}
   - {fileID: 21300000, guid: 46be6bcf602bc9444a709064be96f490, type: 3}
   - {fileID: 21300000, guid: a02cd729c6edbec4faf089db32e901c2, type: 3}
-  - {fileID: 21300000, guid: 210e3eb2d6f5ca546a12ed0d86f6a4db, type: 3}
   - {fileID: 21300000, guid: f2b1c900a5957294ca5049fac8b1ffaa, type: 3}
+  - {fileID: 21300000, guid: 210e3eb2d6f5ca546a12ed0d86f6a4db, type: 3}
   gameBoard: {fileID: 420631579}
   cards: []
+  svManager: {fileID: 0}
+  cardsArray: []
+  indexArray: 
 --- !u!4 &635182096
 Transform:
   m_ObjectHideFlags: 0
@@ -1543,9 +1566,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: bd8162bd158a2224f933ff734947e2fd, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  cardSlot: []
-  cardName: []
-  loadedData: []
 --- !u!1 &649643908
 GameObject:
   m_ObjectHideFlags: 0
@@ -2392,8 +2412,8 @@ MonoBehaviour:
   m_OnClick:
     m_PersistentCalls:
       m_Calls:
-      - m_Target: {fileID: 635182097}
-        m_TargetAssemblyTypeName: CardData, Assembly-CSharp
+      - m_Target: {fileID: 153317540}
+        m_TargetAssemblyTypeName: SaveManager, Assembly-CSharp
         m_MethodName: LoadSavedData
         m_Mode: 1
         m_Arguments:

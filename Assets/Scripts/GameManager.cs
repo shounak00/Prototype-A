@@ -32,8 +32,7 @@ public class GameManager : MonoBehaviour
     public void StartGame()
     {
         gameStarted = true;
-        cardManager.SetupCards();
-
+        
         if (PlayerPrefs.GetInt("Saved") == 1)
         {
             cardManager.ResetCardLists();
@@ -49,6 +48,7 @@ public class GameManager : MonoBehaviour
         
         
         uiManager.startPopOff();
+        cardManager.SetupCards();
         
         Debug.Log("Game started!");
     }
@@ -60,6 +60,7 @@ public class GameManager : MonoBehaviour
         
         uiManager.FinalPopUp();
         SoundManager.Instance.PlayGameEndClip();
+        PlayerPrefs.SetInt("Saved",0);
         Debug.Log("Game ended!");
     }
 

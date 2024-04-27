@@ -6,7 +6,6 @@ using UnityEngine;
 public class GameController : MonoBehaviour
 {
     private CardManager cardManager;
-    
 
     GameObject raycastHitThis;
     private Card selectedCard;
