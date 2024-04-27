@@ -14,7 +14,7 @@ public class CardManager : MonoBehaviour
     public List<Card> flippedCards = new List<Card>();
     public Sprite[] images;
     public GameObject gameBoard;
-    
+
     public List<GameObject> cards = new List<GameObject>();
 
     public SaveManager svManager;
@@ -39,60 +39,77 @@ public class CardManager : MonoBehaviour
         {
             Destroy(card);
         }
+
         cards.Clear();
     }
+
     void SpawnCardsFromSavedData(string[] cardSlots, string[] cardNames)
     {
-        for (int i = 0; i < cardSlots.Length; i++)
+        if (cardSlots != null || cardNames != null)
         {
-            GameObject newCard = Instantiate(cardPrefab);
-            newCard.transform.localPosition = Vector3.zero;
-            newCard.transform.localScale = Vector3.one;
-            cards.Add(newCard);
+            if (cardSlots != null)
+                for (int i = 0; i < cardSlots.Length; i++)
+                {
+                    GameObject newCard = Instantiate(cardPrefab);
+                    newCard.transform.localPosition = Vector3.zero;
+                    newCard.transform.localScale = Vector3.one;
+                    cards.Add(newCard);
 
-            Image cardImage = newCard.GetComponent<Image>();
-            if (cardImage != null)
-            {
-                // Find the index of the card name in the images array
-                int imageIndex = Array.FindIndex(images, img => img.name == cardNames[i]);
-                if (imageIndex != -1)
-                {
-                    cardImage.sprite = images[imageIndex];
-                    newCard.GetComponent<Card>().image = cardImage.sprite;
-                    newCard.GetComponent<Card>().name = cardNames[i];
-                    newCard.GetComponent<Card>().cardName = cardNames[i];
+                    Image cardImage = newCard.GetComponent<Image>();
+                    if (cardImage != null)
+                    {
+                        // Find the index of the card name in the images array
+                        int imageIndex = Array.FindIndex(images, img => img.name == cardNames[i]);
+                        if (imageIndex != -1)
+                        {
+                            cardImage.sprite = images[imageIndex];
+                            newCard.GetComponent<Card>().image = cardImage.sprite;
+                            newCard.GetComponent<Card>().name = cardNames[i];
+                            newCard.GetComponent<Card>().cardName = cardNames[i];
+                        }
+                        else
+                        {
+                            Debug.LogWarning("Card name not found in images array: " + cardNames[i]);
+                        }
+                    }
                 }
-                else
-                {
-                    Debug.LogWarning("Card name not found in images array: " + cardNames[i]);
-                }
-            }
-            
         }
 
         StartCoroutine(waitTillSpawn());
     }
 
-    
+
     IEnumerator waitTillSpawn()
     {
         yield return new WaitForSeconds(0.1f);
-        fixPositions(svManager.cardSlot);
+        FixPositions(svManager.cardSlot);
     }
 
-    void fixPositions(string[] cardSlots)
+    void FixPositions(string[] cardSlots)
     {
         indexArray = new int[cardSlots.Length];
         for (int i = 0; i < cardSlots.Length; i++)
         {
-            int posIndex = Array.FindIndex(cardPosition, img => img.name == cardSlots[i]);
-            cards[i].transform.SetParent(cardPosition[posIndex]);
-            cards[i].transform.localPosition = Vector3.zero;
-            cards[i].transform.localScale = Vector3.one;
+            if (cardSlots[i] != null)
+            {
+                int posIndex = Array.FindIndex(cardPosition, img => img.name == cardSlots[i]);
+                cards[i].transform.SetParent(cardPosition[posIndex]);
+                cards[i].transform.localPosition = Vector3.zero;
+                cards[i].transform.localScale = Vector3.one;
+            }
+
+            else
+            {
+                Destroy(cards[i]);
+            }
+            
+            
+            
+            
+            
         }
     }
 
-    
 
     void SpawnCards()
     {
@@ -105,7 +122,6 @@ public class CardManager : MonoBehaviour
             SpawnForAllGrids();
             ShuffleCards();
         }
-        
     }
 
     void SpawnForAllGrids()
@@ -114,9 +130,9 @@ public class CardManager : MonoBehaviour
         {
             GameObject newCard = Instantiate(cardPrefab, cardPosition[i], true);
             newCard.transform.localPosition = Vector3.zero;
-            newCard.transform.localScale= Vector3.one;
+            newCard.transform.localScale = Vector3.one;
             cards.Add(newCard);
-            
+
             Image cardImage = newCard.GetComponent<Image>();
             if (cardImage != null)
             {
@@ -133,7 +149,7 @@ public class CardManager : MonoBehaviour
         {
             GameObject duplicateCard = Instantiate(cards[i], cardPosition[i + initialCount], true);
             duplicateCard.transform.localPosition = Vector3.zero;
-            duplicateCard.transform.localScale= Vector3.one;
+            duplicateCard.transform.localScale = Vector3.one;
             cards.Add(duplicateCard);
         }
     }
@@ -145,7 +161,7 @@ public class CardManager : MonoBehaviour
         {
             card.Flip();
         }
-        
+
         if (card.isFlipped)
         {
             flippedCards.Add(card);
@@ -155,11 +171,10 @@ public class CardManager : MonoBehaviour
             flippedCards.Remove(card);
         }
     }
-    
+
 
     private void ShuffleCards()
     {
-        
         List<Transform> cardParents = new List<Transform>();
 
         // Get the parent transforms of all cards
@@ -174,7 +189,7 @@ public class CardManager : MonoBehaviour
             int randomIndex = Random.Range(i, cardParents.Count);
             (cardParents[i], cardParents[randomIndex]) = (cardParents[randomIndex], cardParents[i]);
         }
-        
+
         for (int i = 0; i < cards.Count; i++)
         {
             cards[i].transform.SetParent(cardParents[i]);
@@ -185,7 +200,4 @@ public class CardManager : MonoBehaviour
             //Debug.Log(PlayerPrefs.GetString("CardData_" + i , cards[i].GetComponent<Card>().cardSlot+ cards[i].GetComponent<Card>().cardName));
         }
     }
-    
-    
 }
-
