@@ -55,14 +55,17 @@ public class GameManager : MonoBehaviour
 
     public void EndGame()
     {
+        PlayerPrefs.SetInt("Saved",0);
         gameStarted = false;
         cardManager.ResetCardLists();
         
         uiManager.FinalPopUp();
         SoundManager.Instance.PlayGameEndClip();
-        PlayerPrefs.SetInt("Saved",0);
+        saveManager.dataLoaded = false;
+        
         Debug.Log("Game ended!");
     }
+    
 
     public void CountFlippedCards()
     {
