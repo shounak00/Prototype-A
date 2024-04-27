@@ -485,23 +485,6 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   cardSlot: []
-  cardPos:
-  - {fileID: 109556342}
-  - {fileID: 1987331934}
-  - {fileID: 151688749}
-  - {fileID: 901584833}
-  - {fileID: 1824757775}
-  - {fileID: 357386642}
-  - {fileID: 1974019144}
-  - {fileID: 474525156}
-  - {fileID: 1624454291}
-  - {fileID: 649643909}
-  - {fileID: 576289328}
-  - {fileID: 1094171162}
-  - {fileID: 238621324}
-  - {fileID: 92286125}
-  - {fileID: 2095316422}
-  - {fileID: 1270906942}
   cardName: []
   loadedData: []
   dataLoaded: 0
@@ -947,7 +930,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!224 &373500385
 RectTransform:
   m_ObjectHideFlags: 0
@@ -2346,7 +2329,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!224 &974746629
 RectTransform:
   m_ObjectHideFlags: 0
@@ -3335,9 +3318,9 @@ MonoBehaviour:
           m_StringArgument: 
           m_BoolArgument: 0
         m_CallState: 2
-      - m_Target: {fileID: 635182095}
-        m_TargetAssemblyTypeName: CardManager, Assembly-CSharp
-        m_MethodName: ResetCardLists
+      - m_Target: {fileID: 153317540}
+        m_TargetAssemblyTypeName: SaveManager, Assembly-CSharp
+        m_MethodName: SaveGame
         m_Mode: 1
         m_Arguments:
           m_ObjectArgument: {fileID: 0}

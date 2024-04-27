@@ -4,7 +4,7 @@ using UnityEngine;
 
 public class SaveManager : MonoBehaviour
 {
-    int _matches,_turns;
+    int _matches,_turns,_scores;
     
     public string[] cardSlot; 
     public string[] cardName;
@@ -16,27 +16,33 @@ public class SaveManager : MonoBehaviour
         PlayerPrefs.SetInt("Saved",1);
         _matches = GameManager.Instance.matches;
         _turns = GameManager.Instance.turns;
+        _scores = GameManager.Instance.score;
         PlayerPrefs.SetInt("Matches", _matches);
         PlayerPrefs.SetInt("Turns", _turns);
-        Debug.Log("Game saved!");
-        CardManager tempCardManager = GameManager.Instance.cardManager;
+        PlayerPrefs.SetInt("Scores",_scores);
         
+        // Emptying the arrays
+        cardSlot = new string[0];
+        cardName = new string[0];
+        loadedData = new string[0];
+        
+        CardManager tempCardManager = GameManager.Instance.cardManager;
         for (int i = 0; i < tempCardManager.cards.Count; i++)
         {
             if (tempCardManager.cards[i] != null)
             {
                 PlayerPrefs.SetString("CardData_" + i , tempCardManager.cards[i].GetComponent<Card>().cardSlot+ "|"+ tempCardManager.cards[i].GetComponent<Card>().cardName);
-                Debug.Log(PlayerPrefs.GetString("CardData_" + i , tempCardManager.cards[i].GetComponent<Card>().cardSlot+ tempCardManager.cards[i].GetComponent<Card>().cardName));
+                //Debug.Log(PlayerPrefs.GetString("CardData_" + i , tempCardManager.cards[i].GetComponent<Card>().cardSlot+ tempCardManager.cards[i].GetComponent<Card>().cardName));
             }
         }
     }
 
     public void LoadGame()
     {
-        int matches = PlayerPrefs.GetInt("Matches");
-        int turns = PlayerPrefs.GetInt("Turns");
+        GameManager.Instance.matches = PlayerPrefs.GetInt("Matches");
+        GameManager.Instance.turns = PlayerPrefs.GetInt("Turns");
+        GameManager.Instance.score = PlayerPrefs.GetInt("Scores");
         LoadSavedData();
-        Debug.Log("Game loaded! Matches: " + matches + ", Turns: " + turns);
     }
     
     

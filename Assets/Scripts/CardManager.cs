@@ -96,16 +96,13 @@ public class CardManager : MonoBehaviour
                 cards[i].transform.SetParent(cardPosition[posIndex]);
                 cards[i].transform.localPosition = Vector3.zero;
                 cards[i].transform.localScale = Vector3.one;
+                cards[i].GetComponent<Card>().cardSlot = cardPosition[posIndex].name;
             }
 
             else
             {
                 Destroy(cards[i]);
             }
-            
-            
-            
-            
             
         }
     }
